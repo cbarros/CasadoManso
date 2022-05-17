@@ -25,8 +25,13 @@ class HomeController extends Controller
     public function index()
     {
         $produtos = DB::table('produtos')
-                    ->orderBy('name')->get();
+                    ->leftJoin('users', 'users.id', 'produtos.user_id')
+                    ->select('produtos.*', 'users.name as usuario')
+                    ->orderBy('produtos.name')
+                    ->get();
 
-        return view('home');
+        return view('index',[
+            'produtos' => $produtos,
+        ]);
     }
 }

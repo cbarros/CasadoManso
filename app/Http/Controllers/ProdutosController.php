@@ -39,7 +39,7 @@ class ProdutosController extends Controller
         $dados = $request->all();
         if($request->hasFile('url'))
         {
-            $dados['url'] = $repoImg->saveImage($request->file('url'), 1, 'produtos', 200);
+            $dados['url'] = $repoImg->saveImage($request->file('url'), 1, 'produtos', 1024);
         } else {
             return redirect()->back()->with('error', 'Imagem não encontrada!');
         }
@@ -68,11 +68,57 @@ class ProdutosController extends Controller
 
     public function update(Request $request, $id)
     {
-        //
+        echo 'Estou aqui!';
+        exit;
     }
 
     public function destroy($id)
     {
 
+    }
+
+    public function reserva($id)
+    {
+        $salvar = [
+            'user_id' => Auth::user()->id,
+            'confirmado' => date('Y-m-d'),
+        ];
+        try{
+            DB::table('produtos')->where('id', $id)->update($salvar);
+        } catch(\Exception $e) {
+            return redirect()->back()->with('error', $e->getMessage());
+        }
+
+        return redirect()->route('home')->with('success', 'Presente reservado com sucesso!');
+    }
+
+    public function cancela($id)
+    {
+        $salvar = [
+            'user_id' => NULL,
+            'confirmado' => NULL,
+        ];
+        try{
+            DB::table('produtos')->where('id', $id)->update($salvar);
+        } catch(\Exception $e) {
+            return redirect()->back()->with('error', $e->getMessage());
+        }
+
+        return redirect()->route('home')->with('success', 'Presente cancelado com sucesso!');
+    }
+
+    public function email(Request $request)
+    {
+        $dados = $request->all();
+        unset($dados['_token']);
+        $dados['cad'] = date('Y-m-d');
+
+        try{
+            DB::table('emails')->insert($dados);
+        } catch(\Exception $e) {
+            return redirect()->back()->with('error', $e->getMessage());
+        }
+
+        return redirect()->route('home')->with('success', 'Mensagem enviada com sucesso!');
     }
 }
