@@ -47,15 +47,11 @@
                                     <img src="{{ $item->url }}" alt="" />
                                 </a>
                                 <h2>{{ $item->name }}</h2>
-
-
                                 @if(isset($item->user_id))
-
-                                    <button type="submit" class="btn primary @if(Auth::user()->id != $item->user_id) disabled @endif" onclick="Cancelar({{ $item->id }})">Cancelar Reserva</button>
-                                    <p>Presente já reservado em {{ date('d/m/Y', strtotime($item->confirmado)) }} por {{ $item->usuario }}.</p>
+                                    <p>Presente já reservado em {{ date('d/m/Y', strtotime($item->confirmado)) }} por {{ $item->usuario }}. @if(Auth::user()->id == $item->user_id)<a onclick="Cancelar({{ $item->id }})">Click aqui para CANCELAR o presente</a>@endif</p>
                                 @else
-                                    <button type="submit" class="btn primary" onclick="Salvar({{ $item->id }})">Reservar</button>
-                                    <p>Click no botão para reservar o presente!</p>
+                                    <!-- <button type="submit" class="btn primary" onclick="Salvar({{ $item->id }})">Reservar</button> -->
+                                    <p><a onclick="Salvar({{ $item->id }})">Click aqui para reservar o presente!</a></p>
                                 @endif
                             </article>
                         @endforeach
@@ -124,8 +120,6 @@
                 function Salvar(id)
                 {
                     var url = "{{ URL::to('/') }}";
-                    console.log(url);
-                    console.log('estou aqui! ' + id);
                     window.location.href = "reserva/" + id;
                 }
                 function Cancelar(id)
