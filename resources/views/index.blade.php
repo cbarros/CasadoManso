@@ -9,6 +9,16 @@
 		<noscript><link rel="stylesheet" href="{{ asset('css/noscript.css') }}" /></noscript>
 	</head>
 	<body class="is-preload">
+        <style>
+            .badge {
+                background-color: blue;
+                color: white;
+                padding: 4px 8px;
+                text-align: center;
+                border-radius: 5px;
+                font-size: 1em;
+            }
+        </style>
         <div class="row">
             <div class="col-12">
                 <center>
@@ -42,13 +52,15 @@
 				<!-- Main -->
 					<div id="main">
                         @foreach ($produtos as $item)
-                            <article class="thumb">
+                            <article class="thumb" >
                                 <a href="{{ $item->url }}" class="image">
-                                    <img src="{{ $item->url }}" alt="" />
+                                    <img src="{{ $item->url }}" alt="{{ $item->name }}" />
                                 </a>
-                                <h2>{{ $item->name }}</h2>
-                                @if(isset($item->user_id))
-                                    <p>Presente já reservado em {{ date('d/m/Y', strtotime($item->confirmado)) }} por {{ $item->usuario }}. @if(Auth::user()->id == $item->user_id)<a onclick="Cancelar({{ $item->id }})">Click aqui para CANCELAR o presente</a>@endif</p>
+                                <h2><span class="badge">{{ $item->name }}</span></h2>
+                                 @if($item->user_id != '')
+                                    <div class="alert alert-success" role="alert">
+                                        <p style="color: black; font-weight: bold; text-align: center;">Presente já reservado em {{ date('d/m/Y', strtotime($item->confirmado)) }} por {{ $item->usuario }}. @if(Auth::user()->id == $item->user_id)<a onclick="Cancelar({{ $item->id }})">Click aqui para CANCELAR o presente</a>@endif</p>
+                                    </div>
                                 @else
                                     <!-- <button type="submit" class="btn primary" onclick="Salvar({{ $item->id }})">Reservar</button> -->
                                     <p><a onclick="Salvar({{ $item->id }})">Click aqui para reservar o presente!</a></p>
@@ -67,13 +79,17 @@
 									<p>Site desenvolvido para mostrar quais serão os presentes </p>
 								</section>
 								<section>
-									<h2>Follow me on ...</h2>
+									<h2>Nos Acompanhe</h2>
 									<ul class="icons">
+                                        <!--
 										<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
 										<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
-										<li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
+                                        -->
+										<li><a href="https://instagram.com/mi_ladyblue?igshid=MDE2OWE1N2Q=" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
+                                        <!--
 										<li><a href="#" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
 										<li><a href="#" class="icon brands fa-dribbble"><span class="label">Dribbble</span></a></li>
+                                        -->
 										<li><a href="#" class="icon brands fa-linkedin-in"><span class="label">LinkedIn</span></a></li>
 									</ul>
 								</section>
@@ -117,6 +133,7 @@
 			<script src="{{ asset('js/util.js') }}"></script>
 			<script src="{{ asset('js/main.js') }}"></script>
             <script type='text/javascript'>
+                $('.alert').alert()
                 function Salvar(id)
                 {
                     var url = "{{ URL::to('/') }}";

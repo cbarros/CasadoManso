@@ -48,7 +48,7 @@ class ProdutosController extends Controller
             'url' => $dados['url'],
         ];
         try{
-            $id = DB::table('produtos')->insertGetId($salvar);
+            DB::table('produtos')->insertGetId($salvar);
         } catch(\Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
         }

@@ -74,7 +74,9 @@
                                     <td class="text-truncate">{{ $item->usuario }}</td>
                                     <td>{{ $item->confirmado }}</td>
                                     <td><img src="{{ $item->url }}" alt="{{ $item->name }}" width="50px;"></td>
-                                    <td></td>
+                                    <td>
+
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -87,9 +89,7 @@
         <div class="col-6">
             {!! $produtos->appends(Request::except('page'))->links() !!}
         </div>
-        <div class="col-3">
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#novo">Novo Produto</button>
-        </div>
+
     </div>
 
 
