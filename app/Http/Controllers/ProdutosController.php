@@ -75,6 +75,28 @@ class ProdutosController extends Controller
     public function destroy($id)
     {
 
+        $produto = DB::table('produtos')->where('id', $id)->first();
+        if(isset($produto->url))
+        {
+            $ArrPATH = explode("/", $produto->url);
+            $file = public_path('images/produtos/1/' . $ArrPATH[count($ArrPATH) - 1]);
+
+            if(file_exists($file))
+            {
+                unlink($file);
+            }
+        }
+        try {
+            DB::table('produtos')->where('id', $id)->delete();
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', $e->getMessage());
+        }
+
+        return redirect()
+                ->route('produtos.index')
+                ->with('success', 'Produto Deletado com Sucesso!');
+
+
     }
 
     public function reserva($id)

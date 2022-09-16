@@ -75,7 +75,17 @@
                                     <td>{{ $item->confirmado }}</td>
                                     <td><img src="{{ $item->url }}" alt="{{ $item->name }}" width="50px;"></td>
                                     <td>
-
+                                        <form action="{{ action('App\Http\Controllers\ProdutosController@destroy', $item->id ) }}" method="POST">
+                                            {{method_field('delete')}}
+                                            {{csrf_field()}}
+                                            <button class="btn btn-danger btn-sm"
+                                                    type="submit"
+                                                    data-toggle="tooltip"
+                                                    data-placement="top"
+                                                    title="Deletar Produto">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </button>
+                                        </form>
                                     </td>
                                 </tr>
                             @endforeach
@@ -94,4 +104,34 @@
 
 
 </div>
-@endsection
+
+    <div class="modal modal-danger fade" id="ModalDelete" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title text-center" id="myModalLabel">Apagar Produto</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+
+                <form action="{{ action('App\Http\Controllers\ProdutosController@destroy', '1' ) }}" method="POST">
+                        {{method_field('delete')}}
+                        {{csrf_field()}}
+                    <div class="modal-body">
+                        <p class="text-center">
+                            Você quer realmente delertar esse produto?
+                        </p>
+                        <b><span id="fav-title"></span></b>
+                        <input type="hidden" name="id" id="id">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" data-dismiss="modal">Não, Cancelar</button>
+                        <button type="submit" class="btn btn-warning">Deletar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+@stop
+
+
