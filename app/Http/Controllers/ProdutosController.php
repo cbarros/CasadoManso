@@ -24,6 +24,7 @@ class ProdutosController extends Controller
                     ->orderBy('produtos.name')
                     ->paginate(20);
 
+
         return view('produto')
                 ->with('produtos', $produtos)
                 ->render();
