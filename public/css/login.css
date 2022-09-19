@@ -49,6 +49,23 @@ form.login input[type="password"] {
     outline: 0;
 }
 
+form.login input[type="email"] {
+    width: 100%;
+    margin: 0;
+    padding: 5px 10px;
+    background: 0;
+    border: 0;
+    border-bottom: 1px solid #FFFFFF;
+    outline: 0;
+    font-style: italic;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 1px;
+    margin-bottom: 5px;
+    color: #FFFFFF;
+    outline: 0;
+}
+
 form.login input[type="submit"] {
     width: 100%;
     font-size: 14px;
@@ -62,6 +79,10 @@ form.login input[type="submit"] {
 
 form.login input[type="submit"]:hover {
     transition: background-color 0.5s ease;
+}
+
+form.login input::placeholder {
+    color: black;
 }
 
 form.login .remember-forgot {

@@ -38,13 +38,13 @@
                         Faça seu Login</p>
                     <form class="login" method="POST" action="{{ route('login') }}">
                         @csrf
-                        <input type="email" id="email" name="email" @error('email') is-invalid @enderror" placeholder="E-Mail" value="{{ old('email') }}" style="width: 100%" required autocomplete="email" autofocus/>
+                        <input type="email" id="email" name="email" @error('email') is-invalid @enderror" placeholder="E-Mail" value="{{ old('email') }}" style="width: 100%" required autocomplete="email"/>
                         @error('email')
                             <div class="alert alert-danger" role="alert">
                                 <small>{{ $message }}</small>
                             </div>
                         @enderror
-                        <input id="password" type="password" @error('password') is-invalid @enderror" name="password" required autocomplete="current-password"/>
+                        <input id="password" type="password" @error('password') is-invalid @enderror" placeholder="Senha" name="password" required autocomplete="current-password"/>
                         @error('password')
                             <div class="alert alert-danger" role="alert">
                                 <small>{{ $message }}</small>
