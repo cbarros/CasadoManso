@@ -56,15 +56,22 @@
                                 <a href="{{ $item->url }}" class="image">
                                     <img src="{{ $item->url }}" alt="{{ $item->name }}" />
                                 </a>
-                                <h2><span class="badge">{{ $item->name }}</span></h2>
-                                 @if($item->user_id != '')
+
+                                @if($item->user_id != '')
                                     <div class="alert alert-success" role="alert">
                                         <p style="color: black; font-weight: bold; text-align: center;">Presente já reservado em {{ date('d/m/Y', strtotime($item->confirmado)) }} por {{ $item->usuario }}. @if(Auth::user()->id == $item->user_id)<a onclick="Cancelar({{ $item->id }})">Click aqui para CANCELAR o presente</a>@endif</p>
                                     </div>
                                 @else
-                                    <!-- <button type="submit" class="btn primary" onclick="Salvar({{ $item->id }})">Reservar</button> -->
-                                    <p><a onclick="Salvar({{ $item->id }})">Click aqui para reservar o presente!</a></p>
+                                    <div class="position-relative">
+                                        <button type="submit" class="btn primary" onclick="Salvar({{ $item->id }})">Reservar</button>
+                                    </div>
+                                    <!--
+                                    <div class="alert alert-warning">
+                                        <p style="color: rgb(144, 3, 3); font-weight: bold; text-align: center;"><a onclick="Salvar({{ $item->id }})">Click aqui para reservar o presente!</a></p></span>
+                                    </div>
+                                    -->
                                 @endif
+                                <h2><span class="badge">{{ $item->name }}</span></h2>
                             </article>
                         @endforeach
 
